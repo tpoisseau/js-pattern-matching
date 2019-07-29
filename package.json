@@ -1,0 +1,27 @@
+{
+  "name": "pattern-matching",
+  "version": "1.0.0",
+  "description": "In waiting Pattern Matching proposal adoption",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    "./comparators": "./comparators/index.js",
+    "./evaluators": "./evaluators/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpoisseau/js-pattern-matching.git"
+  },
+  "keywords": [
+    "pattern-matching"
+  ],
+  "author": "tpoisseau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpoisseau/js-pattern-matching/issues"
+  },
+  "homepage": "https://github.com/tpoisseau/js-pattern-matching#readme"
+}
