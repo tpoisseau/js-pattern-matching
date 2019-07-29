@@ -1,5 +1,6 @@
 import returnValue from "./evaluators/returnValue.js";
 import strictEqual from "./comparators/strictEqual.js";
+import objectStrictLike from "./comparators/objectStrictLike.js";
 
 class PatterMatching {
   #stack;
@@ -15,7 +16,7 @@ class PatterMatching {
 
   match(comparator, evaluator) {
     if (typeof comparator !== 'function') {
-      comparator = strictEqual(comparator);
+      comparator = comparator !== 'object' ? strictEqual(comparator) : objectStrictLike(comparator);
     }
     if (typeof evaluator !== 'function') {
       evaluator = returnValue(evaluator);

@@ -2,7 +2,7 @@ export interface ExtractSchema {
     [key: string]: boolean|string|symbol;
 }
 
-export type Evaluator<A, T, C> = (eArg: A) => (fArg: T) => C
+export type Evaluator<EV, PV, R> = (evaluatorValue: EV) => (patternValue: PV) => R
 
 /**
  * create an extractor function.
@@ -16,11 +16,14 @@ export type Evaluator<A, T, C> = (eArg: A) => (fArg: T) => C
  * @param schema
  * @returns a function who generate an object populate with key from schema and value from obj
  */
-export function extract(schema: ExtractSchema): (obj: {[key:string]: any}) => {[key:string]: any};
+export function extract<
+    EV extends ExtractSchema,
+    PV extends {[key:string]: any},
+    R extends {[key:string]: any}>(schema: EV): (obj: PV) => R;
 
 /**
  * Create a function who will return value
  *
  * @param value
  */
-export function returnValue<T>(value: T): () => T;
+export function returnValue<EV, PV, R extends EV>(value: EV): (patternValue: PV) => R;
