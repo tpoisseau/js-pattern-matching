@@ -1,0 +1,18 @@
+{
+  "mode": "file",
+  "out": "docs",
+  "includeDeclarations": true,
+  "excludeExternals": true,
+  "categorizeByGroup": true,
+  "src": [
+    "./src/evaluators/index.d.ts",
+    "./src/comparators/index.d.ts",
+    "./src/index.d.ts"
+  ],
+  "exclude": [
+    "./**/*.js",
+    "./node_modules/typedoc",
+    "./node_modules/typescript",
+    "./node_modules/@types/node/ts3.2/util.d.ts"
+  ]
+}

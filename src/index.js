@@ -43,7 +43,7 @@ class PatterMatching {
     }
 
     if (this.#defaultEvaluator === void 0) {
-      throw new Error(`You should provide a default case before exec PatterMatching`)
+      return value;
     }
 
     return this.#defaultEvaluator(value);

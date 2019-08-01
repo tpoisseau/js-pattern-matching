@@ -1,29 +1,84 @@
-export interface ExtractSchema {
-    [key: string]: boolean|string|symbol;
+declare module 'pattern-matching/evaluators' {
+    export type ExtractSchemaCallback = (value: ExtractSchema) => any;
+
+    export interface ExtractSchema {
+        /**
+         * With indexable key as `fromKey`, value associated as `newKey`, instance of [[ExtractSchema]] as `value`
+         *
+         * - If `newKey` is `false`, skip
+         * - If `newKey` is `ExtractSchemaCallback` map `[fromKey]=newKey(value)`
+         * - If `newKey` is `string|symbol`  map `[newKey]=value[fromKey]`
+         * - If `newKey` is `true` map `[fromKey]=value[fromKey]`
+         */
+        [key: string]: boolean|string|symbol|ExtractSchemaCallback;
+    }
+
+    export type Evaluator<PV, R> = (patternValue: PV) => R
+
+    /**
+     * create an extractor function.
+     *
+     * @see [[ExtractSchema]] for understand how extractor will map data
+     *
+     * @param schema - define mapping of object
+     * @returns a function who generate an object populate with key from schema and value from obj
+     *
+     * @example
+     *
+     * ```js
+     * import { extractValue } from 'pattern-matching/evaluators';
+     *
+     * const mapper = extractValue({
+     *  foo: false, // for the demo but it's no use
+     *  bar: true,
+     *  baz: 'lorem',
+     *  bax: obj => obj.array.join(', '),
+     * });
+     *
+     * > mapper({foo: `I'll be skipped!`, bar: 'bar', baz: 'baz', array: [0,1,2], foo_prime: `mapper ignore me :'(`})
+     * > {
+     *     bar: 'bar',
+     *     lorem: 'baz',
+     *     bax: '0, 1, 2'
+     * }
+     * ```
+     */
+    export function extractValue<
+        EV extends ExtractSchema,
+        PV extends {[key:string]: any},
+        R extends {[key:string]: any}>(schema: EV): Evaluator<PV, R>;
+
+    /**
+     * Create a function who will return value
+     *
+     * @param value
+     *
+     * @example
+     *
+     * ```js
+     * import { returnValue } from 'pattern-matching/evaluators';
+     *
+     * const getFoo = returnValue('foo');
+     *
+     * > getFoo()
+     * > 'foo'
+     * > getFoo('bar')
+     * > 'foo'
+     * ```
+     */
+    export function returnValue<EV, PV, R extends EV>(value: EV): Evaluator<PV, R>;
+
+    /**
+     * When evaluator is called, throw error
+     *
+     * @param error
+     */
+    export function throwError<EV extends Error|string, PV, R>(error: EV): Evaluator<PV, R>
+
+    /**
+     * When evaluator is called, throw new ErrorClass(PV)
+     *
+     * @param ErrorClass
+     */
+    export function throwNewError<EV extends (typeof Error), PV, R>(ErrorClass: EV): Evaluator<PV, R>
 }
-
-export type Evaluator<EV, PV, R> = (evaluatorValue: EV) => (patternValue: PV) => R
-
-/**
- * create an extractor function.
- *
- * When this extractor function will be called with a `<value obj>`, the schema will be iterate by `<entries>`
- * - If `<value entry>` is false (not falthy), skip
- * - If `<value entry>` is string or symbol, value will be use as `<new key>` in `<generated object>`
- * - Else `<key entry>` will be use as `<new key>` in `<generated object>`
- * - Value associate with `<new key>` in `<generated object>` will be `<value obj>[<key entry>]`
- *
- * @param schema
- * @returns a function who generate an object populate with key from schema and value from obj
- */
-export function extract<
-    EV extends ExtractSchema,
-    PV extends {[key:string]: any},
-    R extends {[key:string]: any}>(schema: EV): (obj: PV) => R;
-
-/**
- * Create a function who will return value
- *
- * @param value
- */
-export function returnValue<EV, PV, R extends EV>(value: EV): (patternValue: PV) => R;

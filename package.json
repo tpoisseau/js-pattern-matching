@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "In waiting Pattern Matching proposal adoption",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
   "exports": {
-    "./comparators": "./comparators/index.js",
-    "./evaluators": "./evaluators/index.js"
+    "./comparators": "./src/comparators/index.js",
+    "./evaluators": "./src/evaluators/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/tpoisseau/js-pattern-matching/issues"
   },
-  "homepage": "https://github.com/tpoisseau/js-pattern-matching#readme"
+  "homepage": "https://github.com/tpoisseau/js-pattern-matching#readme",
+  "devDependencies": {
+    "typedoc": "^0.15.0"
+  }
 }
