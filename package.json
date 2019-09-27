@@ -1,6 +1,6 @@
 {
   "name": "pattern-matching",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "In waiting Pattern Matching proposal adoption",
   "type": "module",
   "main": "src/index.js",

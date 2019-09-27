@@ -54,8 +54,8 @@ declare module 'pattern-matching' {
      * @see [[Evaluator]]
      */
     export class PatternMatching<EV, PV, R> {
-        private stack: Map<Predicate<PV>, Evaluator<PV, R>>;
-        private defaultEvaluator: Evaluator<PV, R>;
+        private _stack: Map<Predicate<PV>, Evaluator<PV, R>>;
+        private _defaultEvaluator: Evaluator<PV, R>;
 
         /**
          * Add in [[stack]] an entry of <Predicate<PV>, Evaluator<PV, R>>

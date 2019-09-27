@@ -3,11 +3,9 @@ import strictEqual from "./comparators/strictEqual.js";
 import objectStrictLike from "./comparators/objectStrictLike.js";
 
 class PatterMatching {
-  #stack;
-  #defaultEvaluator;
-
   constructor() {
-    this.#stack = new Map();
+    this._stack = new Map();
+    this._defaultEvaluator = void 0;
 
     this.match = this.match.bind(this);
     this.default = this.default.bind(this);
@@ -22,13 +20,13 @@ class PatterMatching {
       evaluator = returnValue(evaluator);
     }
 
-    this.#stack.set(comparator, evaluator);
+    this._stack.set(comparator, evaluator);
 
     return this;
   }
 
   default(evaluator = void 0) {
-    this.#defaultEvaluator = typeof evaluator !== 'function'
+    this._defaultEvaluator = typeof evaluator !== 'function'
       ? returnValue(evaluator)
       : evaluator;
 
@@ -36,17 +34,17 @@ class PatterMatching {
   }
 
   exec(value) {
-    for (const [comparator, evaluator] of this.#stack.entries()) {
+    for (const [comparator, evaluator] of this._stack.entries()) {
       if (comparator(value)) {
         return evaluator(value);
       }
     }
 
-    if (this.#defaultEvaluator === void 0) {
+    if (this._defaultEvaluator === void 0) {
       return value;
     }
 
-    return this.#defaultEvaluator(value);
+    return this._defaultEvaluator(value);
   }
 }
 
