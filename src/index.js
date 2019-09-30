@@ -54,11 +54,21 @@ function pattern(value) {
     apply(target, thisArg, args) {
       return target.exec(value);
     },
-    // so exec is hotpatched and callable with no value (because value provided as pattern argument)
     get(target, prop, reciever) {
+      // so exec is hotpatched and callable with no value (because value provided as pattern argument)
       if (prop === 'exec') return () => target.exec(value);
 
-      return target[prop];
+      const targetProp = target[prop];
+      // So other method is hotpatched for keep fluent api but instead of return `this` instance of `PatterMatching`
+      // return the proxy
+      if (typeof targetProp === 'function') return (...args) => {
+        const result = targetProp.apply(target, args);
+        
+        return result === target ? reciever : result;
+      }
+
+      // else return the property
+      return targetProp;
     }
   });
 }
