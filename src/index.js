@@ -14,7 +14,7 @@ class PatterMatching {
 
   match(comparator, evaluator) {
     if (typeof comparator !== 'function') {
-      comparator = comparator !== 'object' ? strictEqual(comparator) : objectStrictLike(comparator);
+      comparator = typeof comparator !== 'object' ? strictEqual(comparator) : objectStrictLike(comparator);
     }
     if (typeof evaluator !== 'function') {
       evaluator = returnValue(evaluator);
