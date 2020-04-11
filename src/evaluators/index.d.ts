@@ -1,4 +1,4 @@
-declare module 'pattern-matching/evaluators' {
+declare module '@tpoisseau/pattern-matching/evaluators' {
     export type ExtractSchemaCallback = (value: ExtractSchema) => any;
 
     export interface ExtractSchema {
@@ -26,7 +26,7 @@ declare module 'pattern-matching/evaluators' {
      * @example
      *
      * ```js
-     * import { extractValue } from 'pattern-matching/evaluators';
+     * import { extractValue } from '@tpoisseau/pattern-matching/evaluators';
      *
      * const mapper = extractValue({
      *  foo: false, // for the demo but it's no use
@@ -46,7 +46,8 @@ declare module 'pattern-matching/evaluators' {
     export function extractValue<
         EV extends ExtractSchema,
         PV extends {[key:string]: any},
-        R extends {[key:string]: any}>(schema: EV): Evaluator<PV, R>;
+        R extends {[key:string]: any}
+    >(schema: EV): Evaluator<PV, R>;
 
     /**
      * Create a function who will return value
@@ -56,7 +57,7 @@ declare module 'pattern-matching/evaluators' {
      * @example
      *
      * ```js
-     * import { returnValue } from 'pattern-matching/evaluators';
+     * import { returnValue } from '@tpoisseau/pattern-matching/evaluators';
      *
      * const getFoo = returnValue('foo');
      *

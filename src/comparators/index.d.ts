@@ -1,4 +1,4 @@
-declare module 'pattern-matching/comparators' {
+declare module '@tpoisseau/pattern-matching/comparators' {
     export type Predicate<PV> = (value: PV) => boolean;
 
     /**

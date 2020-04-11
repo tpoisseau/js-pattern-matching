@@ -14,7 +14,7 @@ class PatterMatching {
 
   match(comparator, evaluator) {
     if (typeof comparator !== 'function') {
-      comparator = typeof comparator !== 'object' ? strictEqual(comparator) : objectStrictLike(comparator);
+      comparator = (typeof comparator !== 'object') ? strictEqual(comparator) : objectStrictLike(comparator);
     }
     if (typeof evaluator !== 'function') {
       evaluator = returnValue(evaluator);
@@ -26,7 +26,7 @@ class PatterMatching {
   }
 
   default(evaluator = void 0) {
-    this._defaultEvaluator = typeof evaluator !== 'function'
+    this._defaultEvaluator = (typeof evaluator !== 'function')
       ? returnValue(evaluator)
       : evaluator;
 
@@ -65,7 +65,7 @@ function pattern(value) {
         const result = targetProp.apply(target, args);
         
         return result === target ? reciever : result;
-      }
+      };
 
       // else return the property
       return targetProp;

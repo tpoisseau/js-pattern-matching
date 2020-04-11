@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>pattern-matching</title>
+	<title>@tpoisseau/pattern-matching - v1.0.3</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">pattern-matching</a>
+					<a href="index.html" class="title">@tpoisseau/pattern-matching - v1.0.3</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> pattern-matching</h1>
+			<h1> @tpoisseau/pattern-matching - v1.0.3</h1>
 		</div>
 	</div>
 </header>
@@ -66,6 +66,34 @@
 					<h1>js-pattern-matching</h1>
 				</a>
 				<p>In waiting Pattern Matching proposal adoption</p>
+				<p><a href="https://github.com/tc39/proposal-pattern-matching#motivating-examples">https://github.com/tc39/proposal-pattern-matching#motivating-examples</a></p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h1>Install</h1>
+				</a>
+				<pre><code><span class="hljs-built_in">npm</span> install @tpoisseau/pattern-matching
+<span class="hljs-built_in">npm</span> install <span class="hljs-string">'https://github.com/tpoisseau/js-pattern-matching#1.0.3'</span></code></pre>
+				<a href="#getting-starting" id="getting-starting" style="color: inherit; text-decoration: none;">
+					<h1>Getting Starting</h1>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> pattern <span class="hljs-keyword">from</span> <span class="hljs-string">'@tpoisseau/pattern-matching'</span>
+<span class="hljs-keyword">import</span> {objectStrictLike} <span class="hljs-keyword">from</span> <span class="hljs-string">'@tpoisseau/pattern-matching/comparators'</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">todoApp</span>(<span class="hljs-params">state=initialState, action</span>) </span>{
+    <span class="hljs-keyword">return</span> pattern(action)
+     .match({<span class="hljs-attr">type</span>: <span class="hljs-string">'set-visibility-filter'</span>}, ({<span class="hljs-attr">filter</span>: visFilter}) =&gt; ({...state, visFilter}))
+     .match(objectStrictLike({<span class="hljs-attr">type</span>: <span class="hljs-string">'add-todo'</span>}), ({text}) =&gt; ({...state, <span class="hljs-attr">todos</span>: [...state.todos, {text}]})
+     .match({<span class="hljs-attr">type</span>: <span class="hljs-string">'toggle-todo'</span>}, ({index}) =&gt; ({
+         ...state,
+         <span class="hljs-attr">todos</span>: state.todos.map(<span class="hljs-function">(<span class="hljs-params">{...item, done}, idx</span>) =&gt;</span> ({...item, <span class="hljs-attr">done</span>: idx === index ? !done : done})
+     })
+     .default(state)()
+}</code></pre>
+				<a href="#api-doc" id="api-doc" style="color: inherit; text-decoration: none;">
+					<h1>API Doc</h1>
+				</a>
+				<ul>
+					<li><a href="https://tpoisseau.github.io/js-pattern-matching/">https://tpoisseau.github.io/js-pattern-matching/</a></li>
+				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -75,13 +103,13 @@
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module tsd-is-not-exported">
-						<a href="modules/_pattern_matching_.html">"pattern-<wbr>matching"</a>
+						<a href="modules/__tpoisseau_pattern_matching_.html">&quot;@tpoisseau/pattern-<wbr>matching&quot;</a>
 					</li>
 					<li class=" tsd-kind-module tsd-is-not-exported">
-						<a href="modules/_pattern_matching_comparators_.html">"pattern-<wbr>matching/comparators"</a>
+						<a href="modules/__tpoisseau_pattern_matching_comparators_.html">&quot;@tpoisseau/pattern-<wbr>matching/comparators&quot;</a>
 					</li>
 					<li class=" tsd-kind-module tsd-is-not-exported">
-						<a href="modules/_pattern_matching_evaluators_.html">"pattern-<wbr>matching/evaluators"</a>
+						<a href="modules/__tpoisseau_pattern_matching_evaluators_.html">&quot;@tpoisseau/pattern-<wbr>matching/evaluators&quot;</a>
 					</li>
 				</ul>
 			</nav>

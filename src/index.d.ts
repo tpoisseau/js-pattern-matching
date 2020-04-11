@@ -1,23 +1,24 @@
 /**
  * # Install
  * ```
- * npm install 'https://github.com/tpoisseau/js-pattern-matching#1.0.0'
+ * npm install @tpoisseau/pattern-matching
+ * npm install 'https://github.com/tpoisseau/js-pattern-matching#1.0.3'
  * ```
  *
  * # Use
  *
  * ```js
- * import pattern, {PatternMatching} from 'pattern-matching';
- * import * as comparators from 'pattern-matching/comparators';
- * import * as evaluators from 'pattern-matching/evaluators';
+ * import pattern, {PatternMatching} from '@tpoisseau/pattern-matching';
+ * import * as comparators from '@tpoisseau/pattern-matching/comparators';
+ * import * as evaluators from '@tpoisseau/pattern-matching/evaluators';
  * ```
  */
-declare module 'pattern-matching' {
-    import {Predicate, strictEqual, objectStrictLike} from 'pattern-matching/comparators';
-    import {Evaluator, returnValue, throwError} from 'pattern-matching/evaluators';
+declare module '@tpoisseau/pattern-matching' {
+    import {Predicate, strictEqual, objectStrictLike} from '@tpoisseau/pattern-matching/comparators';
+    import {Evaluator, returnValue, throwError} from '@tpoisseau/pattern-matching/evaluators';
 
-    import * as comparators from 'pattern-matching/comparators';
-    import * as evaluators from 'pattern-matching/evaluators';
+    import * as comparators from '@tpoisseau/pattern-matching/comparators';
+    import * as evaluators from '@tpoisseau/pattern-matching/evaluators';
 
     /**
      * You can use PatternMatching class as a evoluated Pattern Strategy
@@ -31,8 +32,8 @@ declare module 'pattern-matching' {
      * import https from 'https';
      * import http2 from 'http2';
      *
-     * import { PatternMatching } from 'pattern-matching';
-     * import { throwError } from 'pattern-matching/evaluators';
+     * import { PatternMatching } from '@tpoisseau/pattern-matching';
+     * import { throwError } from '@tpoisseau/pattern-matching/evaluators';
      *
      * const serverStrategies = new PatternMatching()
      *  .match('http', http)
@@ -119,7 +120,7 @@ declare module 'pattern-matching' {
      *
      * @example
      * ```js
-     * import pattern from 'pattern-matching';
+     * import pattern from '@tpoisseau/pattern-matching';
      *
      * const value = pattern('foo')
      *  .match('bar', Symbol('bar'))
@@ -132,12 +133,13 @@ declare module 'pattern-matching' {
      * ### Matching `fetch()` response
      *
      * ```js
-     * import pattern from 'pattern-matching'
-     * import {throwNewError} from 'pattern-matching/evaluators'
+     * import pattern from '@tpoisseau/pattern-matching'
+     * import {objectStrictLike} from '@tpoisseau/pattern-matching/comparators'
+     * import {throwNewError} from '@tpoisseau/pattern-matching/evaluators'
      *
      * pattern(await fetch(jsonService))
      *  .match(objectStrictLike({status: 200}), ({headers: {'Content-Length': l}}) => console.log(l))
-     *  .match(objectStrictLike({status: 404}), () => console.log('JSON not found'))
+     *  .match({status: 404}, () => console.log('JSON not found'))
      *  .match(({status}) => status >= 404, throwNewError(RequestError))
      *  .exec()
      * ```
@@ -145,12 +147,13 @@ declare module 'pattern-matching' {
      * ### Handling Reducer
      *
      * ```js
-     * import pattern from 'pattern-matching'
+     * import pattern from '@tpoisseau/pattern-matching'
+     * import {objectStrictLike} from '@tpoisseau/pattern-matching/comparators'
      *
      * function todoApp(state=initialState, action) {
      *     return pattern(action)
      *      .match({type: 'set-visibility-filter'}, ({filter: visFilter}) => ({...state, visFilter}))
-     *      .match({type: 'add-todo'}, ({text}) => ({...state, todos: [...state.todos, {text}]})
+     *      .match(objectStrictLike({type: 'add-todo'}), ({text}) => ({...state, todos: [...state.todos, {text}]})
      *      .match({type: 'toggle-todo'}, ({index}) => ({
      *          ...state,
      *          todos: state.todos.map(({...item, done}, idx) => ({...item, done: idx === index ? !done : done})
@@ -159,25 +162,30 @@ declare module 'pattern-matching' {
      * }
      * ```
      *
+     * When firts param of match is an object use [[objectStrictLike]] to generate the predicate.
+     *
      * ### mixed in with JSX code for quick props handling
      *
      * ```jsx
-     * import pattern from 'pattern-matching'
-     * import { haveKeys } from 'pattern-matching/comparators'
+     * import pattern from '@tpoisseau/pattern-matching'
+     * import { haveKeys } from '@tpoisseau/pattern-matching/comparators'
      *
      * <Fetch url={API_URL}>{
      *     props => pattern(props)
-     *      .match(haveKeys('loading'), () => <Loading />)
+     *      .match(haveKeys('loading'), <Loading />)
      *      .match(haveKeys('error'), ({error}) => <Error error={error} />)
      *      .match(haveKeys('data'), ({data}) => <Page data={data} />)()
      * }</Fetch>
      * ```
      *
+     * When the second parameter of match (evaluator) is not a function will use the [[returnValue]] factory evaluator
+     * So `.match(haveKeys('loading'), <Loading />)` is like using `.match(haveKeys('loading'), () => <Loading />)`
+     *
      * ### General structural duck-typing on an API for vector-likes.
      *
      * ```js
-     * import pattern from 'pattern-matching'
-     * import { haveKeys } from 'pattern-matching/comparators'
+     * import pattern from '@tpoisseau/pattern-matching'
+     * import { haveKeys } from '@tpoisseau/pattern-matching/comparators'
      *
      * const getLength = vector => pattern(vector)
      *  .match(haveKeys('x', 'y', 'z'), ({x, y, z}) => Math.sqrt(x**2, y**2, z**2))
