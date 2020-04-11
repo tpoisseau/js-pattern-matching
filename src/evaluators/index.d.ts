@@ -7,7 +7,7 @@ declare module '@tpoisseau/pattern-matching/evaluators' {
          *
          * - If `newKey` is `false`, skip
          * - If `newKey` is `ExtractSchemaCallback` map `[fromKey]=newKey(value)`
-         * - If `newKey` is `string|symbol`  map `[newKey]=value[fromKey]`
+         * - If `newKey` is `string|symbol`  map `[fromKey]=value[newKey]`
          * - If `newKey` is `true` map `[fromKey]=value[fromKey]`
          */
         [key: string]: boolean|string|symbol|ExtractSchemaCallback;
@@ -29,17 +29,17 @@ declare module '@tpoisseau/pattern-matching/evaluators' {
      * import { extractValue } from '@tpoisseau/pattern-matching/evaluators';
      *
      * const mapper = extractValue({
-     *  foo: false, // for the demo but it's no use
-     *  bar: true,
-     *  baz: 'lorem',
-     *  bax: obj => obj.array.join(', '),
+     *  foo: true,
+     *  bar: false, // for the demo but it's no use
+     *  baz: value => value.toto,
+     *  tata: 'foo',
      * });
      *
-     * > mapper({foo: `I'll be skipped!`, bar: 'bar', baz: 'baz', array: [0,1,2], foo_prime: `mapper ignore me :'(`})
+     * > mapper({foo: 42, bar: 'baz', baz: 'foo', toto: 'tata'})
      * > {
-     *     bar: 'bar',
-     *     lorem: 'baz',
-     *     bax: '0, 1, 2'
+     *     foo: 42,
+     *     baz: 'tata',
+     *     tata: 42
      * }
      * ```
      */

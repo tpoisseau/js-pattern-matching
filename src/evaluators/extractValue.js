@@ -7,10 +7,10 @@ const extractValue = schema => value => {
     if (istoKeyBoolean && !toKey) continue;
 
     if (typeof toKey === 'function') {
-      newValue[toKey] = toKey(value)
+      newValue[fromKey] = toKey(value)
     }
     else {
-      newValue[istoKeyBoolean ? fromKey : toKey] = value[fromKey];
+      newValue[fromKey] = value[istoKeyBoolean ? fromKey : toKey];
     }
   }
 
