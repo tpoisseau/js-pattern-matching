@@ -12,7 +12,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npm publish --access public",
-    "doc": "typedoc"
+    "doc": "typedoc",
+    "postdoc": "cp .nojekyll docs"
   },
   "repository": {
     "type": "git",
