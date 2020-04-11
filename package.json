@@ -10,7 +10,8 @@
     "./evaluators": "./src/evaluators/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava",
+    "test:watch": "ava --watch",
     "publish": "npm publish --access public",
     "doc": "typedoc",
     "postdoc": "cp .nojekyll docs"
@@ -29,6 +30,8 @@
   },
   "homepage": "https://github.com/tpoisseau/js-pattern-matching#readme",
   "devDependencies": {
+    "ava": "^3.6.0",
     "typedoc": "^0.15.0"
-  }
+  },
+  "dependencies": {}
 }

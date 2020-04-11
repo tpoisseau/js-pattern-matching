@@ -16,7 +16,7 @@ declare module '@tpoisseau/pattern-matching/comparators' {
     export function shallowEqual<CV, PV>(value: CV): Predicate<PV>;
 
     /**
-     * Predicate check if `PV` value have all keys
+     * Predicate check if `PV` value have **all** keys
      */
     export function haveKeys<PV>(...keys: string[]): Predicate<PV>;
 
