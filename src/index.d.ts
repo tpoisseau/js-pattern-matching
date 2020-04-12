@@ -188,10 +188,10 @@ declare module '@tpoisseau/pattern-matching' {
      * import { haveKeys } from '@tpoisseau/pattern-matching/comparators'
      *
      * const getLength = vector => pattern(vector)
-     *  .match(haveKeys('x', 'y', 'z'), ({x, y, z}) => Math.sqrt(x**2, y**2, z**2))
-     *  .match(haveKeys('x', 'y'), ({x, y}) => Math.sqrt(x**2, y**2))
+     *  .match(haveKeys('x', 'y', 'z'), ({x, y, z}) => Math.sqrt(x**2 + y**2 + z**2))
+     *  .match(haveKeys('x', 'y'), ({x, y}) => Math.sqrt(x**2 + y**2))
      *  .match(haveKeys('x'), ({x}) => Math.sqrt(x**2))
-     *  .match(Array.isArray, v => v.length)
+     *  .match(Array.isArray, vector => Math.sqrt.apply(Math, vector.map(v => v**2)))
      *  .default(NaN)()
      * ```
      */

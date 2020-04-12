@@ -2,7 +2,7 @@ import returnValue from "./evaluators/returnValue.js";
 import strictEqual from "./comparators/strictEqual.js";
 import objectStrictLike from "./comparators/objectStrictLike.js";
 
-class PatterMatching {
+class PatternMatching {
   constructor() {
     this._stack = new Map();
     this._defaultEvaluator = void 0;
@@ -49,22 +49,25 @@ class PatterMatching {
 }
 
 function pattern(value) {
-  return new Proxy(new PatterMatching(), {
-    // so PatterMatching instance is callable
+  const patternMatcher = new PatternMatching();
+  const execPatternMatcher = () => patternMatcher.exec(value);
+  
+  return new Proxy(function(){}, {
+    // so PatternMatching instance is callable
     apply(target, thisArg, args) {
-      return target.exec(value);
+      return patternMatcher.exec(value);
     },
     get(target, prop, reciever) {
       // so exec is hotpatched and callable with no value (because value provided as pattern argument)
-      if (prop === 'exec') return () => target.exec(value);
+      if (prop === 'exec') return execPatternMatcher;
 
-      const targetProp = target[prop];
-      // So other method is hotpatched for keep fluent api but instead of return `this` instance of `PatterMatching`
+      const targetProp = patternMatcher[prop];
+      // So other method is hotpatched for keep fluent api but instead of return `this` instance of `PatternMatching`
       // return the proxy
       if (typeof targetProp === 'function') return (...args) => {
-        const result = targetProp.apply(target, args);
+        const result = targetProp.apply(patternMatcher, args);
         
-        return result === target ? reciever : result;
+        return (result === patternMatcher) ? reciever : result;
       };
 
       // else return the property
@@ -74,4 +77,4 @@ function pattern(value) {
 }
 
 export default pattern;
-export { PatterMatching };
+export { PatternMatching };
