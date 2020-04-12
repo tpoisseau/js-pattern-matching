@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2015"],
-    "types": ["@types/ava"]
+    "lib": ["es2015"]
   },
   "include": [
     "src/**/*"

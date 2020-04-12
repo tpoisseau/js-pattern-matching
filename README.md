@@ -6,7 +6,7 @@ https://github.com/tc39/proposal-pattern-matching#motivating-examples
 # Install
 ```
 npm install @tpoisseau/pattern-matching
-npm install 'https://github.com/tpoisseau/js-pattern-matching#1.0.3'
+npm install 'https://github.com/tpoisseau/js-pattern-matching#1.0.5'
 ```
 
 # Getting Starting
@@ -20,9 +20,9 @@ function todoApp(state=initialState, action) {
      .match(objectStrictLike({type: 'add-todo'}), ({text}) => ({...state, todos: [...state.todos, {text}]})
      .match({type: 'toggle-todo'}, ({index}) => ({
          ...state,
-         todos: state.todos.map(({...item, done}, idx) => ({...item, done: idx === index ? !done : done})
+         todos: state.todos.map(({...item, done}, idx) => ({...item, done: idx === index ? !done : done}),
      })
-     .default(state)()
+     .default(state)();
 }
 ```
 

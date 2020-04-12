@@ -1,6 +1,6 @@
 {
   "name": "@tpoisseau/pattern-matching",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "In waiting Pattern Matching proposal adoption",
   "type": "module",
   "main": "src/index.js",
